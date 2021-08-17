@@ -4,9 +4,7 @@ import {TypedAPI, Wallet} from './ts-api';
 import {Persistence} from './db';
 import {SellStrategy} from './strategies/sell/abstract';
 import {BuyStrategy} from './strategies/buy/abstract';
-import {DummyBuyStrategy} from './strategies/buy/dummyBuyStrategy';
 import {TriangleSellStrategy} from './strategies/sell/triangle';
-import {movingAverage} from './math';
 import {MovingAverageGoUp} from './strategies/buy/movingAverageGoUp';
 
 export class BinanceTrader {
@@ -84,7 +82,7 @@ export class BinanceTrader {
         }
     }
 
-    private async step() {
+    async run(): Promise<void> {
         console.log('------------------');
         console.log(
             `Start new iteration, current time: ${Date()}, Binance timestamp: ${await this.getAPIClient().time()}`,
@@ -92,13 +90,6 @@ export class BinanceTrader {
         await this.buyStep();
         await this.sellStep();
         console.log('Done.');
-    }
-
-    async run(): Promise<void> {
-        await this.step();
-        setInterval(async () => {
-            await this.step();
-        }, 20 * 1000);
     }
 }
 

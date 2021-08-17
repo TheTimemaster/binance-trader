@@ -1,6 +1,6 @@
 import {Investment} from '../../db';
 import {BuyStrategy} from './abstract';
-import {BinanceTrader} from '../../index';
+import {BinanceTrader} from '../../trader';
 import {CandlestickInterval} from '../../ts-api';
 import {decreasing, differences, increasing, movingAverage} from '../../math';
 

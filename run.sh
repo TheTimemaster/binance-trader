@@ -1,0 +1,1 @@
+docker run -it -d --name binance-trader -v `pwd`/sqlite.db:/trader/sqlite.db binance-trader

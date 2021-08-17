@@ -1,6 +1,6 @@
 import {SellStrategy} from './abstract';
 import {Investment} from '../../db';
-import {BinanceTrader} from '../../index';
+import {BinanceTrader} from '../../trader';
 
 export class TriangleSellStrategy extends SellStrategy {
     sellOver: number;

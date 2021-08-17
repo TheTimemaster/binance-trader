@@ -1,6 +1,6 @@
 import {Investment} from '../../db';
 import {BuyStrategy} from './abstract';
-import {BinanceTrader} from '../../index';
+import {BinanceTrader} from '../../trader';
 
 export class DummyBuyStrategy extends BuyStrategy {
     constructor(trader: BinanceTrader) {

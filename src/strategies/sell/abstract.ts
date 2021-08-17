@@ -1,5 +1,5 @@
 import {Investment} from '../../db';
-import {BinanceTrader} from '../../index';
+import {BinanceTrader} from '../../trader';
 
 export abstract class SellStrategy {
     trader: BinanceTrader;
