@@ -19,7 +19,7 @@ export class DummyBuyStrategy extends BuyStrategy {
         return Promise.resolve({
             id: undefined,
             symbol: 'BTC',
-            amount: (balance.available / price) * 0.01,
+            amount: (balance.available / price) * 0.5,
             rate: price,
             timestamp: now,
         });

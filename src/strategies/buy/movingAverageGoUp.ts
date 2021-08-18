@@ -49,7 +49,7 @@ export class MovingAverageGoUp extends BuyStrategy {
                 return Promise.resolve({
                     id: undefined,
                     symbol: symbol,
-                    amount: (balance.available / price) * 0.2,
+                    amount: (balance.available / price) * 0.1,
                     rate: price,
                     timestamp: now,
                 });

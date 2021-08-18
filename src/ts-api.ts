@@ -1,3 +1,5 @@
+import {roundify} from './math';
+
 export type Wallet = {
     [symbol: string]: {
         available: number;
@@ -66,11 +68,12 @@ export class TypedAPI {
     }
 
     async marketBuy(ticker: string, quantity: number): Promise<void> {
-        await this.client.marketBuy(ticker, quantity);
+        console.log(roundify(quantity));
+        await this.client.marketBuy(ticker, roundify(quantity));
     }
 
     async marketSell(ticker: string, quantity: number): Promise<void> {
-        await this.client.marketSell(ticker, quantity);
+        await this.client.marketSell(ticker, roundify(quantity));
     }
 
     async candlesticks(

@@ -16,6 +16,11 @@ export const reduceWithAcc = <IT, OT, AT>(
     return arr;
 };
 
+export const roundify = (x: number): string => {
+    const amount = Math.log10(x);
+    return x.toFixed(Math.max(3, -Math.round(amount) + 2));
+};
+
 export const differences = (numbers: number[]) => {
     return reduceWithAcc(numbers, (last, el) => [el - last, el], 0).slice(1);
 };

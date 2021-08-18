@@ -104,13 +104,3 @@ export class BinanceTrader {
         console.log('Done.');
     }
 }
-
-const run = async () => {
-    const trader = new BinanceTrader('USDT');
-    await trader.init();
-    await trader.run();
-};
-
-run();
-
-//console.log(movingAverage([2, 1, 3, 7, 4, 2, 0], 3));
