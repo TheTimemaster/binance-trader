@@ -58,12 +58,18 @@ export class BinanceTrader {
         const investments = await this.persistence.currentInvestments();
         for (const investment of investments) {
             if (await this.sellStrategy.shouldSell(investment)) {
-                console.log(`Will sell: ${investment}`);
-                await this.apiClient.marketSell(
-                    `${investment.symbol}${this.targetCurrency}`,
-                    investment.amount,
-                );
-                await this.persistence.endInvestment(investment);
+                console.log(`Will sell: ${JSON.stringify(investment)}`);
+                try {
+                    await this.apiClient.marketSell(
+                        `${investment.symbol}${this.targetCurrency}`,
+                        investment.amount,
+                    );
+                    await this.persistence.endInvestment(investment);
+                } catch (e) {
+                    console.log('Error while selling:');
+                    console.log(e);
+                    console.log(JSON.stringify(e));
+                }
             }
         }
     }
@@ -73,12 +79,18 @@ export class BinanceTrader {
         await this.refreshWallet();
         const newInvestment = await this.buyStrategy.shouldBuy();
         if (newInvestment != null) {
-            console.log(`Will buy: ${newInvestment}`);
-            await this.apiClient.marketBuy(
-                `${newInvestment.symbol}${this.targetCurrency}`,
-                newInvestment.amount,
-            );
-            await this.persistence.addInvestment(newInvestment);
+            console.log(`Will buy: ${JSON.stringify(newInvestment)}`);
+            try {
+                await this.apiClient.marketBuy(
+                    `${newInvestment.symbol}${this.targetCurrency}`,
+                    newInvestment.amount,
+                );
+                await this.persistence.addInvestment(newInvestment);
+            } catch (e) {
+                console.log('Error while buying:');
+                console.log(e);
+                console.log(JSON.stringify(e));
+            }
         }
     }
 
