@@ -16,9 +16,13 @@ export const reduceWithAcc = <IT, OT, AT>(
     return arr;
 };
 
+export const toFixedDown = (x: number, places: number): number =>
+    Math.floor(x * 10 ** places) / 10 ** places;
+
 export const roundify = (x: number): string => {
     const amount = Math.log10(x);
-    return x.toFixed(Math.max(3, -Math.round(amount) + 2));
+    const places = Math.max(3, -Math.round(amount) + 2);
+    return toFixedDown(x, places).toFixed(places);
 };
 
 export const differences = (numbers: number[]) => {

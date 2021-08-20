@@ -58,6 +58,19 @@ export class BinanceTrader {
         const investments = await this.persistence.currentInvestments();
         for (const investment of investments) {
             if (await this.sellStrategy.shouldSell(investment)) {
+                if (
+                    investment.amount > this.wallet[investment.symbol].available
+                ) {
+                    console.log(
+                        `Tried to sell more ${
+                            investment.symbol
+                        } than available in the wallet (${
+                            investment.amount
+                        } > ${this.wallet[investment.symbol].available})`,
+                    );
+                    investment.amount =
+                        this.wallet[investment.symbol].available;
+                }
                 console.log(`Will sell: ${JSON.stringify(investment)}`);
                 try {
                     await this.apiClient.marketSell(
