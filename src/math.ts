@@ -20,7 +20,11 @@ export const toFixedDown = (x: number, places: number): number =>
     Math.floor(x * 10 ** places) / 10 ** places;
 
 export const roundify = (x: number): string => {
-    const amount = Math.log10(x);
+    const amount = Math.log10(Math.abs(x));
+    // if log10 is NaN x should be 0
+    if (amount != amount) {
+        return '0';
+    }
     const places = Math.max(3, Math.floor(-amount) + 2);
     return toFixedDown(x, places).toFixed(places);
 };
