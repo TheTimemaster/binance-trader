@@ -21,6 +21,11 @@ export class MovingAverageGoUp extends BuyStrategy {
         const balance =
             this.trader.getWallet()[this.trader.getTargetCurrency()];
 
+        if (balance.available < 15) {
+            console.log('Balance to low to buy');
+            return null;
+        }
+
         const now = await this.trader.getAPIClient().time();
         const prices = await this.trader.getAPIClient().prices();
 
@@ -63,7 +68,7 @@ export class MovingAverageGoUp extends BuyStrategy {
                 return Promise.resolve({
                     id: undefined,
                     symbol: symbol,
-                    amount: (balance.available / price) * 0.1,
+                    amount: Math.max(12, balance.available * 0.2) / price,
                     rate: price,
                     timestamp: now,
                 });

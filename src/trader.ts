@@ -80,8 +80,12 @@ export class BinanceTrader {
                     await this.persistence.endInvestment(investment);
                 } catch (e) {
                     console.log('Error while selling:');
-                    console.log(e);
-                    console.log(JSON.stringify(e));
+                    if ((e.body as string).includes('MIN_NOTIONAL')) {
+                        console.log('Errored with MIN_NOTIONAL');
+                    } else {
+                        console.log(e);
+                        console.log(JSON.stringify(e));
+                    }
                 }
             }
         }
