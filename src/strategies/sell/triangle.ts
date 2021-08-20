@@ -45,6 +45,14 @@ export class TriangleSellStrategy extends SellStrategy {
             return Promise.resolve(true);
         }
 
+        console.log(
+            `Investment ${JSON.stringify(
+                investment,
+            )} at ratio ${ratio} at elapsed ${percentElapsed} in range (${
+                1 - this.down * (1 - percentElapsed)
+            }, ${1 + this.up * (1 - percentElapsed)})`,
+        );
+
         return Promise.resolve(false);
     }
 }
