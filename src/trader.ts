@@ -38,8 +38,8 @@ export class BinanceTrader {
         this.buyStrategy = new MovingAverageGoUp(this);
         this.sellStrategy = new TriangleSellStrategy(
             this,
-            0.03,
-            0.1,
+            0.01,
+            0.05,
             60 * 60 * 2,
         );
     }

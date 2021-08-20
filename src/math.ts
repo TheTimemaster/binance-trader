@@ -21,7 +21,7 @@ export const toFixedDown = (x: number, places: number): number =>
 
 export const roundify = (x: number): string => {
     const amount = Math.log10(x);
-    const places = Math.max(3, -Math.round(amount) + 2);
+    const places = Math.max(3, Math.floor(-amount) + 2);
     return toFixedDown(x, places).toFixed(places);
 };
 

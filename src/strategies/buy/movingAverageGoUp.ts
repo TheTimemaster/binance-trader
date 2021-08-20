@@ -2,7 +2,13 @@ import {Investment} from '../../db';
 import {BuyStrategy} from './abstract';
 import {BinanceTrader} from '../../trader';
 import {CandlestickInterval} from '../../ts-api';
-import {decreasing, differences, increasing, movingAverage} from '../../math';
+import {
+    decreasing,
+    differences,
+    increasing,
+    movingAverage,
+    roundify,
+} from '../../math';
 
 const symbols = ['BTC', 'BNB', 'ETH', 'XRP', 'DOGE'];
 
@@ -34,13 +40,21 @@ export class MovingAverageGoUp extends BuyStrategy {
             const longMa = movingAverage(avgPrices, 60);
             const shortMa = movingAverage(avgPrices, 15);
 
-            console.log(`d 15min MA: ${differences(shortMa.slice(-10, -1))}`);
-            console.log(`d 60min MA: ${differences(longMa.slice(-10, -1))}`);
+            console.log(
+                `d 15min MA: ${differences(shortMa.slice(-7, -1)).map(
+                    roundify,
+                )}`,
+            );
+            console.log(
+                `d 60min MA: ${differences(longMa.slice(-7, -1)).map(
+                    roundify,
+                )}`,
+            );
 
             if (
-                increasing(shortMa.slice(-10, -1)) &&
-                increasing(longMa.slice(-4, -1)) &&
-                decreasing(longMa.slice(-10, -7))
+                increasing(shortMa.slice(-7, -1)) &&
+                increasing(longMa.slice(-3, -1)) &&
+                decreasing(longMa.slice(-7, -5))
             ) {
                 console.log(`${symbol} deemed viable to buy.`);
                 const price =

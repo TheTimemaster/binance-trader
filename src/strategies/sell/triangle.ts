@@ -1,6 +1,7 @@
 import {SellStrategy} from './abstract';
 import {Investment} from '../../db';
 import {BinanceTrader} from '../../trader';
+import {roundify} from '../../math';
 
 export class TriangleSellStrategy extends SellStrategy {
     sellOver: number;
@@ -33,24 +34,28 @@ export class TriangleSellStrategy extends SellStrategy {
 
         if (ratio > 1 + this.up * (1 - percentElapsed)) {
             console.log(
-                `Will sell at a profit: ratio=${ratio} (buy=${investment.rate}, sell=${price})`,
+                `Will sell at a profit: ratio=${ratio} (buy=${roundify(
+                    investment.rate,
+                )}, sell=${roundify(price)})`,
             );
             return Promise.resolve(true);
         }
 
         if (ratio < 1 - this.down * (1 - percentElapsed)) {
             console.log(
-                `Will emergency sell at a loss: ratio=${ratio} (buy=${investment.rate}, sell=${price})`,
+                `Will emergency sell at a loss: ratio=${ratio} (buy=${roundify(
+                    investment.rate,
+                )}, sell=${roundify(price)})`,
             );
             return Promise.resolve(true);
         }
 
         console.log(
-            `Investment ${JSON.stringify(
-                investment,
-            )} at ratio ${ratio} at elapsed ${percentElapsed} in range (${
-                1 - this.down * (1 - percentElapsed)
-            }, ${1 + this.up * (1 - percentElapsed)})`,
+            `Investment ${JSON.stringify(investment)} at ratio ${roundify(
+                ratio,
+            )} at elapsed ${roundify(percentElapsed)} in range (${roundify(
+                1 - this.down * (1 - percentElapsed),
+            )}, ${roundify(1 + this.up * (1 - percentElapsed))})`,
         );
 
         return Promise.resolve(false);
